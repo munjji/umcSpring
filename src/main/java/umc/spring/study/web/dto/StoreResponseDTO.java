@@ -18,7 +18,7 @@ public class StoreResponseDTO {
         LocalDateTime createdAt;
     }
 
-    // 가에에 미션 추가하기
+    // 가게에 미션 추가하기
     @Builder
     @Getter
     @NoArgsConstructor

@@ -26,4 +26,14 @@ public class Store extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "region_id")
     private Region region;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Mission> missionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
+
+    public void setMission(Mission mission){
+        this.missionList.add(mission);
+    }
 }
