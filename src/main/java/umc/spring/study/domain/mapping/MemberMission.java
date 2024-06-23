@@ -1,10 +1,7 @@
 package umc.spring.study.domain.mapping;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.spring.study.domain.Member;
 import umc.spring.study.domain.Mission;
 import umc.spring.study.domain.common.BaseEntity;
@@ -12,6 +9,7 @@ import umc.spring.study.domain.enums.MissionStatus;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class MemberMission extends BaseEntity {
