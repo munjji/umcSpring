@@ -1,3 +1,5 @@
+package umc.spring.study.apiPayload.exception;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import umc.spring.study.apiPayload.ApiResponse;
 import umc.spring.study.apiPayload.code.ErrorReasonDTO;
 import umc.spring.study.apiPayload.code.status.ErrorStatus;
-import umc.spring.study.apiPayload.exception.GeneralException;
+
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,8 +35,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternalConstraint(e, ErrorStatus.valueOf(errorMessage), HttpHeaders.EMPTY,request);
     }
 
-
-    @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -58,7 +58,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = GeneralException.class)
-    public ResponseEntity onThrowException(GeneralException generalException, HttpServletRequest request) {
+    public ResponseEntity<Object> onThrowException(GeneralException generalException, HttpServletRequest request) {
         ErrorReasonDTO errorReasonHttpStatus = generalException.getErrorResponseHttpStatus();
         return handleExceptionInternal(generalException,errorReasonHttpStatus,null,request);
     }

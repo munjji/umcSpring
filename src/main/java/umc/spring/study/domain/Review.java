@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-
 public class Review extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +19,9 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private Float score;
+    private Float reward;
+    @Column(nullable = false)
+    private String content;
 
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn (name = "member_id")
@@ -41,7 +42,7 @@ public class Review extends BaseEntity {
     }
 
     public void setStore(Store store){
-        if (this.score != null)
+        if (this.reward != null)
             store.getReviewList().remove(this);
         this.store = store;
         store.getReviewList().add(this);
