@@ -9,12 +9,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.study.apiPayload.ApiResponse;
 import umc.spring.study.converter.StoreConverter;
 import umc.spring.study.domain.Mission;
 import umc.spring.study.domain.Review;
 import umc.spring.study.service.StoreService.StoreCommandService;
+import umc.spring.study.service.StoreService.StoreQueryService;
 import umc.spring.study.validation.annotation.ExistMember;
 import umc.spring.study.validation.annotation.ExistStore;
 import umc.spring.study.web.dto.StoreRequestDTO;
@@ -25,6 +27,8 @@ import umc.spring.study.web.dto.StoreResponseDTO;
 @RequestMapping("/stores")
 public class StoreController {
     private final StoreCommandService storeCommandService;
+    private final StoreQueryService storeQueryService;
+
     @PostMapping("/{storeId}/reviews")
     public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> createReview(@RequestBody @Valid StoreRequestDTO.ReviewDTO request, @ExistStore @PathVariable(name = "storeId") Long storeId, @ExistMember @RequestParam(name="memberId") Long memberId) {
         Review review = storeCommandService.createReview(memberId, storeId, request);
@@ -44,7 +48,9 @@ public class StoreController {
             @Parameter(name = "page", description = "페이지 번호, 0번이 1 페이지 입니다."),
     })
     public ApiResponse<StoreResponseDTO.ReviewPreviewListDTO> getReviewList(@ExistStore @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") Integer page) {
-        return null;
+        Page<Review> reviewList = storeQueryService.getReviewList(storeId, page);
+
+        return ApiResponse.onSuccess(StoreConverter.reviewPreviewListDTO(reviewList));
     }
 
     @PostMapping("/{storeId}/missions")
