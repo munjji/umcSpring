@@ -18,8 +18,10 @@ public class Mission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private LocalDate deadline;
+
     @Column(nullable = false)
     private String missionSpec;
 
