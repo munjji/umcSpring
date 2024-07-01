@@ -22,6 +22,15 @@ public class MemberResponseDTO {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class MissionUpdateResultDTO {
+        Long missionId;
+        LocalDateTime updatedAt;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ReviewsResultListDTO {
         List<ReviewsResultDTO> reviewList;
         Integer listSize;
@@ -40,5 +49,28 @@ public class MemberResponseDTO {
         Float reward;
         String content;
         LocalDateTime createdAt;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionsResultListDTO {
+        List<MissionsResultDTO> missionList;
+        Integer listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MissionsResultDTO {
+        String name;
+        String missionSpec;
+        String status;
     }
 }

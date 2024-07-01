@@ -28,11 +28,17 @@ public class StoreConverter {
     }
 
     public static Mission toMission(StoreRequestDTO.MissionDTO request) {
-        return Mission.builder().deadline(request.getDeadline()).missionSpec(request.getMissionSpec()).build();
+        return Mission.builder()
+                .deadline(request.getDeadline())
+                .missionSpec(request.getMissionSpec())
+                .build();
     }
 
     public static StoreResponseDTO.CreateMissionResultDTO toCreateMissionResultDTO(Mission mission) {
-        return StoreResponseDTO.CreateMissionResultDTO.builder().missionId(mission.getId()).createdAt(mission.getCreatedAt()).build();
+        return StoreResponseDTO.CreateMissionResultDTO.builder()
+                .missionId(mission.getId())
+                .createdAt(mission.getCreatedAt())
+                .build();
     }
 
     public static StoreResponseDTO.ReviewPreviewDTO reviewPreviewDTO(Review review) {
@@ -59,25 +65,23 @@ public class StoreConverter {
     }
 
     public static StoreResponseDTO.MissionDTO toMissionDTO(Mission mission) {
-        return StoreResponseDTO.ReviewPreviewDTO.builder()
-                .ownerNickname(review.getMember().getName())
-                .score(review.getReward())
-                .createdAt(review.getCreatedAt())
-                .body(review.getContent())
+        return StoreResponseDTO.MissionDTO.builder()
+                .name(mission.getStore().getName())
+                .missionSpec(mission.getMissionSpec())
                 .build();
     }
 
     public static StoreResponseDTO.MissionListDTO toMissionListDto(Page<Mission> missionList) {
-        List<StoreResponseDTO.ReviewPreviewDTO> reviewPreviewDTOList = reviewList.stream()
-                .map(StoreConverter::reviewPreviewDTO).toList();
+        List<StoreResponseDTO.MissionDTO> missionDTOlist = missionList.stream()
+                .map(StoreConverter::toMissionDTO).toList();
 
-        return StoreResponseDTO.ReviewPreviewListDTO.builder()
-                .isLast(reviewList.isLast())
-                .isFirst(reviewList.isFirst())
-                .totalPage(reviewList.getTotalPages())
-                .totalElements(reviewList.getTotalElements())
-                .listSize(reviewPreviewDTOList.size())
-                .reviewList(reviewPreviewDTOList)
+        return StoreResponseDTO.MissionListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missionDTOlist.size())
+                .missionList(missionDTOlist)
                 .build();
     }
 

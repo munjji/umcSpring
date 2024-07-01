@@ -6,7 +6,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.study.domain.Member;
+import umc.spring.study.domain.Mission;
 import umc.spring.study.domain.Review;
+import umc.spring.study.domain.mapping.MemberMission;
+import umc.spring.study.repository.MemberMissionRepository;
 import umc.spring.study.repository.MemberRepository;
 import umc.spring.study.repository.ReviewRepository;
 
@@ -19,6 +22,7 @@ import java.util.stream.Stream;
 public class MemberQueryServiceImpl implements MemberQueryService{
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Override
     public Optional<Member> findMember(Long id) {
@@ -28,9 +32,16 @@ public class MemberQueryServiceImpl implements MemberQueryService{
     @Override
     public Page<Review> getReviewList(Long memberId, Integer page) {
         Member member = memberRepository.findById(memberId).get();
-
         Page<Review> reviewPage = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
 
         return reviewPage;
+    }
+
+    @Override
+    public Page<MemberMission> getMissionList(Long memberId, Integer page) {
+        Member member = memberRepository.findById(memberId).get();
+        Page<MemberMission> memberMissionPage = memberMissionRepository.findByMember(member, PageRequest.of(page, 10));
+
+        return memberMissionPage;
     }
 }

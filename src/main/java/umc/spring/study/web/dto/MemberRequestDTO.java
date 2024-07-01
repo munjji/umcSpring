@@ -28,4 +28,9 @@ public class MemberRequestDTO {
         @ExistCategories
         List<Long> preferCategory;
     }
+
+    @Getter
+    public static class MissionUpdateDTO {
+        String missionStatus;
+    }
 }

@@ -71,7 +71,7 @@ public class StoreResponseDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MissionDTO {
-        String title;
+        String name;
         String missionSpec;
     }
 }
