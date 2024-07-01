@@ -57,4 +57,28 @@ public class StoreConverter {
                 .reviewList(reviewPreviewDTOList)
                 .build();
     }
+
+    public static StoreResponseDTO.MissionDTO toMissionDTO(Mission mission) {
+        return StoreResponseDTO.ReviewPreviewDTO.builder()
+                .ownerNickname(review.getMember().getName())
+                .score(review.getReward())
+                .createdAt(review.getCreatedAt())
+                .body(review.getContent())
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionListDTO toMissionListDto(Page<Mission> missionList) {
+        List<StoreResponseDTO.ReviewPreviewDTO> reviewPreviewDTOList = reviewList.stream()
+                .map(StoreConverter::reviewPreviewDTO).toList();
+
+        return StoreResponseDTO.ReviewPreviewListDTO.builder()
+                .isLast(reviewList.isLast())
+                .isFirst(reviewList.isFirst())
+                .totalPage(reviewList.getTotalPages())
+                .totalElements(reviewList.getTotalElements())
+                .listSize(reviewPreviewDTOList.size())
+                .reviewList(reviewPreviewDTOList)
+                .build();
+    }
+
 }
